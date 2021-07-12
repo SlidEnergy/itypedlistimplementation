@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraGrid.Columns;
+using Newtonsoft.Json;
 
 namespace itypedlistimplementation
 {
@@ -21,7 +23,8 @@ namespace itypedlistimplementation
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			this.dataSource = GenerateDataSource();
+			//this.dataSource = GenerateDataSource();
+			this.dataSource = ParseCollectionFromJson();
 
 			this.gridControl1.DataSource = this.dataSource;
 		}
@@ -37,6 +40,16 @@ namespace itypedlistimplementation
 
 			return source;
 		}
+
+		public ClientCollection ParseCollectionFromJson()
+		{
+			var list = JsonConvert.DeserializeObject<List<Client>>(File.ReadAllText(@"clients.json"));
+
+			var source = new ClientCollection();
+			source.AddRange(list);
+			return source;
+		}
+
 		private void addColumnButton_Click(object sender, EventArgs e)
 		{
 			string propertyName = "Name";
