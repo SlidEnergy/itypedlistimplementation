@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contact.cs" />
+    <Compile Include="CustomCollectionJsonParser.cs" />
     <Compile Include="CustomModel.cs" />
     <Compile Include="CustomCollection.cs" />
     <Compile Include="CustomPropertyDescriptor.cs" />

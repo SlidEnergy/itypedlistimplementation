@@ -20,8 +20,6 @@ namespace itypedlistimplementation
 			}
 		}
 
-		public Contact(Dictionary<string, object> properties) : base(properties) { }
-
 		public Contact() { }
 	}
 }

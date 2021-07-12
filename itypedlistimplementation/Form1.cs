@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
+using DevExpress.XtraGrid.Columns;
 
 namespace itypedlistimplementation
 {
@@ -26,33 +27,29 @@ namespace itypedlistimplementation
 		private CustomCollection<Contact> GenerateDataSource()
 		{
 			var source = new CustomCollection<Contact>();
+
+			source.AddPropertyDescription<string>("Id");
+			source.AddPropertyDescription<string>("Address");
+			source.AddPropertyDescription<string>("Place");
+
 			var client1 = new Contact() { Id = 1 };
+			client1.SetValue("Address", "Address1");
+			client1.SetValue("Place", "Place1");
 			source.Add(client1);
 
 			var client2 = new Contact() { Id = 2 };
+			client2.SetValue("Address", "Address2");
+			client2.SetValue("Place", "Place2");
 			source.Add(client2);
 
 			return source;
 		}
 
-		public CustomCollection<Contact> ParseCollectionFromJson(string file)
+		private CustomCollection<Contact> ParseCollectionFromJson(string file)
 		{
-			var array = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(File.ReadAllText(file));
+			var json = File.ReadAllText(file);
 
-			var contacts = array.Select(x => new Contact(x));
-
-			var collection = new CustomCollection<Contact>();
-			collection.AddRange(contacts.ToArray());
-
-			if (array.Count > 0)
-			{
-				foreach (var key in array[0].Keys)
-				{
-					collection.AddPropertyDescription<object>(key);
-				}
-			}
-
-			return collection;
+			return CustomCollectionJsonParser.Parse<Contact>(json);
 		}
 
 		private void addColumnButton_Click(object sender, EventArgs e)
