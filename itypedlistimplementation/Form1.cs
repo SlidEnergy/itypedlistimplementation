@@ -18,14 +18,18 @@ namespace itypedlistimplementation
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			//this.dataSource = GenerateDataSource();
-			this.dataSource = ParseCollectionFromJson("clients.json");
+			this.dataSource = GenerateDataSource();
+			//this.dataSource = ParseCollectionFromJson("clients.json");
 
 			this.gridControl1.DataSource = this.dataSource;
 		}
 
 		private CustomCollection<Contact> GenerateDataSource()
 		{
+			AddColumn("Id");
+			AddColumn("Address");
+			AddColumn("Place");
+
 			var source = new CustomCollection<Contact>();
 
 			source.AddPropertyDescription<string>("Id");
@@ -45,6 +49,16 @@ namespace itypedlistimplementation
 			return source;
 		}
 
+		private void AddColumn(string name)
+		{
+			var gc = new GridColumn();
+			gc.Caption = name;
+			gc.FieldName = name;
+			gc.Name = name;
+			gc.Visible = true;
+			gridView1.Columns.Add(gc);
+		}
+
 		private CustomCollection<Contact> ParseCollectionFromJson(string file)
 		{
 			var json = File.ReadAllText(file);
@@ -57,9 +71,8 @@ namespace itypedlistimplementation
 			this.dataSource.AddPropertyDescription<string>("Name");
 			this.dataSource.AddPropertyDescription<string>("ShortName");
 
-			gridControl1.DataSource = null;
-			gridControl1.DataSource = dataSource;
-			gridView1.PopulateColumns();
+			AddColumn("Name");
+			AddColumn("ShortName");
 		}
 
 		private void loadJsonWithExtraFieldsButton_Click(object sender, EventArgs e)
