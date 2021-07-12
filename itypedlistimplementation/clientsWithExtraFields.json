@@ -1,4 +1,4 @@
 [
-  { "Id": 1, "Address": "Address1", "Place": "Place1", "Name": "Name1"},
-  { "Id": 2, "Address": "Address2", "Place": "Place2", "Name": "Name2"}
+  { "Id": 1, "Address": "Address1", "Place": "Place1", "Name": "Name1", "ShortName": "ShortName1"},
+  { "Id": 2, "Address": "Address2", "Place": "Place2", "Name": "Name2", "ShortName": "ShortName2"}
 ]

@@ -25,7 +25,7 @@ namespace itypedlistimplementation
 
 		public override object GetValue(object component)
 		{
-			return ((Client)component).Get(Name);
+			return ((CustomModel)component).GetValue(Name);
 		}
 
 		public override bool IsReadOnly { get { return false; } }
@@ -38,7 +38,7 @@ namespace itypedlistimplementation
 				throw new System.Exception("Invalid type to assign");
 			}
 
-			((Client)component).Set(Name, value);
+			((CustomModel)component).SetValue(Name, value);
 		}
 
 		public override bool ShouldSerializeValue(object component) { return true; }
