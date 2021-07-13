@@ -89,6 +89,9 @@
     <None Include="clients.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="clientsWithExtraFieldsPage2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="clientsWithExtraFields.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

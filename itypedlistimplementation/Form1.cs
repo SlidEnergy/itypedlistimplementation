@@ -18,8 +18,9 @@ namespace itypedlistimplementation
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			this.dataSource = GenerateDataSource();
+			//this.dataSource = GenerateDataSource();
 			//this.dataSource = ParseCollectionFromJson("clients.json");
+			loadJsonWithExtraFieldsButton_Click(null, null);
 
 			this.gridControl1.DataSource = this.dataSource;
 		}
@@ -51,15 +52,28 @@ namespace itypedlistimplementation
 
 		private void AddColumn(string name)
 		{
+			if (gridView1.Columns.Any(x => x.Name == name))
+			{
+				return;
+			}
+
 			var gc = new GridColumn();
 			gc.Caption = name;
 			gc.FieldName = name;
 			gc.Name = name;
 			gc.Visible = true;
+
 			gridView1.Columns.Add(gc);
 		}
 
 		private CustomCollection<Contact> ParseCollectionFromJson(string file)
+		{
+			var json = File.ReadAllText(file);
+
+			return CustomCollectionJsonParser.ParseAndCreateCollection<Contact>(json);
+		}
+
+		private IEnumerable<Contact> ParseJson(string file)
 		{
 			var json = File.ReadAllText(file);
 
@@ -78,10 +92,23 @@ namespace itypedlistimplementation
 		private void loadJsonWithExtraFieldsButton_Click(object sender, EventArgs e)
 		{
 			this.dataSource = ParseCollectionFromJson("clientsWithExtraFields.json");
+			AddColumn("Id");
+			AddColumn("Address");
+			AddColumn("Place");
+			AddColumn("Name");
+			AddColumn("ShortName");
+		}
 
-			gridControl1.DataSource = null;
-			gridControl1.DataSource = dataSource;
-			gridView1.PopulateColumns();
+		private void nextPageButton_Click(object sender, EventArgs e)
+		{
+			var list = ParseJson("clientsWithExtraFieldsPage2.json");
+
+			this.dataSource.Clear();
+
+			foreach (var item in list)
+			{
+				this.dataSource.Add(item);
+			}
 		}
 	}
 }

@@ -9,14 +9,18 @@ namespace itypedlistimplementation
 {
 	public static class CustomCollectionJsonParser
 	{
-		public static CustomCollection<T> Parse<T>(string json) where T : CustomModel
+		public static CustomCollection<T> ParseAndCreateCollection<T>(string json) where T : CustomModel
 		{
 			var list = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
 
 			var contacts = ConvertListOfDictionaryToArrayOfModel<T>(list);
 
 			var collection = new CustomCollection<T>();
-			collection.AddRange(contacts.ToArray());
+
+			foreach (var contact in contacts)
+			{
+				collection.Add(contact);
+			}
 
 			if (list.Count > 0)
 			{
@@ -24,6 +28,12 @@ namespace itypedlistimplementation
 			}
 
 			return collection;
+		}
+		public static IEnumerable<T> Parse<T>(string json) where T : CustomModel
+		{
+			var list = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+
+			return ConvertListOfDictionaryToArrayOfModel<T>(list);
 		}
 
 		private static IEnumerable<T> ConvertListOfDictionaryToArrayOfModel<T>(List<Dictionary<string, object>> list) where T : CustomModel

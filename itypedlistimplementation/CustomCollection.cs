@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace itypedlistimplementation
 {
-	public class CustomCollection<Model> : List<Model>, ITypedList where Model : CustomModel
+	public class CustomCollection<Model> : BindingList<Model>, ITypedList where Model : CustomModel
 	{
 		public CustomCollection()
 		{
