@@ -18,11 +18,6 @@ namespace itypedlistimplementation
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			//this.dataSource = GenerateDataSource();
-			//this.dataSource = ParseCollectionFromJson("clients.json");
-			loadJsonWithExtraFieldsButton_Click(null, null);
-
-			this.gridControl1.DataSource = this.dataSource;
 		}
 
 		private CustomCollection<Contact> GenerateDataSource()
@@ -97,13 +92,13 @@ namespace itypedlistimplementation
 			AddColumn("Place");
 			AddColumn("Name");
 			AddColumn("ShortName");
+
+			this.gridControl1.DataSource = this.dataSource;
 		}
 
 		private void nextPageButton_Click(object sender, EventArgs e)
 		{
 			var list = ParseJson("clientsWithExtraFieldsPage2.json");
-
-			this.dataSource.Clear();
 
 			foreach (var item in list)
 			{
